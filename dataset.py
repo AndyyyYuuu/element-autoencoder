@@ -8,6 +8,7 @@ class ElementSet:
         self.data = []
         with open(path, "r") as file:
             csv_reader = csv.reader(file)
+            next(csv_reader)
             for row in csv_reader:
                 self.data.append([
                     float(row[3]),  # atomic mass
