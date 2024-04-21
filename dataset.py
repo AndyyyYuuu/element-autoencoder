@@ -14,8 +14,8 @@ class ElementSet:
                     float(row[3]),  # atomic mass
                     float(row[4]),  # num neutrons
                     float(row[5]),  # num protons
-                    float(row[7]),  # period
-                    float(row[8]),  # group
+                    #float(row[7]),  # period
+                    #float(row[8]),  # group
                     *one_hot(["solid", "liq", "gas", "artificial"], row[9]),  # phase
                     float(row[10] == "yes"),  # radioactivity
                     float(row[11] == "yes"),  # natural

@@ -4,9 +4,9 @@ import csv
 from model import Autoencoder
 from dataset import ElementSet
 
-NUM_EPOCHS = 1000
+NUM_EPOCHS = 10000
 DATA_PATH = "data/Periodic Table of Elements.csv"
-OUTPUT_PATH = "elements-1.csv"
+OUTPUT_PATH = "display_elements/data/elements-2.csv"
 
 loss_function = nn.MSELoss()
 
@@ -14,7 +14,7 @@ dataset = ElementSet(DATA_PATH)
 
 data_loader = torch.utils.data.DataLoader(dataset, batch_size=5)
 
-model = Autoencoder(23, 2)
+model = Autoencoder(21, 2)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.003)
 
 for epoch in range(NUM_EPOCHS):
