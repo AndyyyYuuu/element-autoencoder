@@ -6,7 +6,7 @@ from dataset import ElementSet
 
 NUM_EPOCHS = 10000
 DATA_PATH = "data/Periodic Table of Elements.csv"
-OUTPUT_PATH = "display_elements/data/elements-2.csv"
+OUTPUT_PATH = "display_elements/data/elements-3.csv"
 
 loss_function = nn.MSELoss()
 
@@ -14,7 +14,7 @@ dataset = ElementSet(DATA_PATH)
 
 data_loader = torch.utils.data.DataLoader(dataset, batch_size=5)
 
-model = Autoencoder(21, 2)
+model = Autoencoder(21, 3)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.003)
 
 for epoch in range(NUM_EPOCHS):
@@ -36,7 +36,7 @@ with open(DATA_PATH, "r") as file:
     csv_reader = csv.reader(file)
     next(csv_reader)
     for row in csv_reader:
-        results.append(row[1:3])  # row 1, 2 are element name and symbol respectively
+        results.append(row[1:3]+[row[15]])  # row 1, 2 are element name and symbol respectively
 
 for i in range(len(dataset)):
     results[i] += model.encoder(dataset.data[i]).tolist()
