@@ -4,7 +4,8 @@ Float[][] elementCoords;
 float SCALE = 30;
 float X = 0.2;
 float Y = 0.6;
-float r = 0;
+float rx = 0;
+float ry = 0;
 HashMap<String, Color> typeColor = new HashMap<String, Color>();
 PFont font;
 
@@ -13,14 +14,14 @@ int SPHERES = 1;
 
 int mode = SYMBOLS; 
 void setup(){
-  //size(1000, 640);
+  
   size(800,800,P3D);
   font = createFont("CourierNewPS-BoldMT", 32);
   println(PFont.list());
-  //fullScreen();
+
   pixelDensity(2);
   
-  
+  // Map type to color
   typeColor.put("Alkali Metal", new Color(255, 0, 255));
   typeColor.put("Alkaline Earth Metal", new Color(255, 0, 0));
   typeColor.put("Metal", new Color(255, 125, 0));
@@ -49,27 +50,35 @@ void setup(){
 
 void draw(){
   background(0);
+  
   pushMatrix();
-  r += 0.01;
+  // Rotation and scaling
   translate(width/2, height/2, 0);
-  r = 0.95*r + 0.05*(((float)mouseX/width*TWO_PI)%TWO_PI);
-  rotateY(r);
+  rx = 0.95*rx + 0.05*(((float)mouseX/width*TWO_PI)%TWO_PI);
+  rotateY(rx);
+  ry = 0.95*ry + 0.05*(((float)mouseY/height*TWO_PI)%TWO_PI);
+  rotateX(ry);
   translate(-width/2, -height/2, 0);
   translate(width*X, height*Y, -100);
   
   
   textFont(font);
+  // Iterate through elements and draw
   for (int i=0; i<elementCoords.length; i++){
     color c = typeColor.getOrDefault(elementInfo[i][2], new Color(255, 255, 255)).getColor();
     fill(c);
     
     pushMatrix();
     translate(elementCoords[i][0]*SCALE, elementCoords[i][1]*SCALE, elementCoords[i][2]*SCALE);
+    // Symbols mode 
     if (mode == SYMBOLS){
-      rotateY(-r);
+      rotateX(-ry);
+      rotateY(-rx); // Text always faces player
+      
       textSize(12);
       text(elementInfo[i][1], 0, 0, 0);
     }else if (mode == SPHERES){
+      // Spheres mode
       stroke(c);
       sphere(2);
       
